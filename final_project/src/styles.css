@@ -1,0 +1,35 @@
+@font-face {
+    font-family: "ITC Novarese W04 Bold";
+    src: url("https://db.onlinewebfonts.com/t/4035f05690d57781a7dad59bcf5c5818.eot");
+    src: url("https://db.onlinewebfonts.com/t/4035f05690d57781a7dad59bcf5c5818.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/4035f05690d57781a7dad59bcf5c5818.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/4035f05690d57781a7dad59bcf5c5818.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/4035f05690d57781a7dad59bcf5c5818.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/4035f05690d57781a7dad59bcf5c5818.svg#ITC Novarese W04 Bold")format("svg");
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif
+}
+
+h1 {
+    background-color: #0c194b;
+    color: white;
+    padding: 5px;
+    font-family: "ITC Novarese W04 Bold";
+    text-align: center;
+}
+
+svg {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.mainView {
+    display: flex;
+    
+    /* justify-content: center;
+    align-items: center; */
+}
+
