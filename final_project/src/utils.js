@@ -137,11 +137,11 @@ function topWinningClubs(data) {
 }
 
 function topGoalScorers(data, club) {
-  console.log("data inside top goal scorers", data);
+  // console.log("data inside top goal scorers", data);
   if (club) {
     data = data.filter((row) => row.Club === club);
   }
-  console.log("data inside top goal scorers after filter", data);
+  // console.log("data inside top goal scorers after filter", data);
 
   let result = data.reduce((acc, d) => {
     let currentPlayer = acc.find((c) => c.Player === d.Player);
@@ -159,9 +159,9 @@ function topGoalScorers(data, club) {
 
     return acc;
   }, []);
-  console.log("club inside topgoalscorers", club);
+  // console.log("club inside topgoalscorers", club);
 
-  console.log("result after top goal scorers", result);
+  // console.log("result after top goal scorers", result);
   // Sort the result array by TitlesCount in descending order
   result.sort((a, b) => a.Goals - b.Goals);
 

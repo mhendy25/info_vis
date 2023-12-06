@@ -15,6 +15,24 @@ import { Routes } from "./routes";
 
 // import villarrealLogo from './top_5_football_leagues/la-liga/villarreal.png';
 
+
+function showTooltip(content, x, y) {
+  const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("left", x + "px")
+    .style("top", y + "px");
+
+  tooltip.append("div")
+    .attr("class", "tooltip-content")
+    .html(content);
+}
+
+// Function to hide tooltip
+function hideTooltip() {
+  d3.select(".tooltip").remove();
+}
+
 // some fancy cody to try to prevent point overlapping that does not work - I just keep it here
 function customCollisionDetection(nodes, padding) {
   const quadtree = d3
@@ -64,7 +82,12 @@ function ClubMap(props) {
     logos,
     selectedPointClub,
     setSelectedPointClub,
+    barHeader,
+    setBarHeader
   } = props;
+
+
+
   // fix - deselect the club upon second click
   let onClick = (club) => {
     // if (selectedPointClub === club) {
@@ -86,17 +109,28 @@ function ClubMap(props) {
     console.log("current point", selectedPointClub);
   };
 
+
+  // const [titleContent, setTitleContent] = useState('Top teams in Europe');
+
+  // const handleChangeContent = () => {
+  //   setTitleContent('Top coeaches');
+  // };
+
+
+
   // console.log(logos);
 
   // console.log(Object.keys(clubs).length);
 
   // Define a geoMercator projection
   let projection = geoMercator();
-  projection.scale(545).translate([235, height + 300]);
+  projection.scale(545).translate([235, height + 150]);
   let path = geoPath().projection(projection);
 
   const svgRef = useRef(); // helps to dynamically update svg I think
   const randomPoints = [];
+
+  
 
   useEffect(() => {
     // Create SVG container
@@ -225,19 +259,28 @@ function ClubMap(props) {
           .attr("club", (d) => d.club)
           .attr("xlink:href", (d, i) => (d.logo ? images[i] : null)) // the logo is added here after import
           // .attr("onclick", (d) => console.log(d.club))
+          .on("mouseover", (event, d) => {
+            // Show the tooltip on mouseover
+            showTooltip(tooltipContent(d), event.pageX, event.pageY);
+          })
+          .on("mouseout", () => {
+            // Hide the tooltip on mouseout
+            hideTooltip();
+          })
           .on("click", (event, d) => {
-            console.log("d", d);
+            // console.log("d", d);
             if (selectedPointClub && selectedPointClub !== d.club) {
               setSelectedPointClub(d.club);
+
             } else {
-              console.log("second else", d.club);
+              // console.log("second else", d.club);
               if (selectedPointClub && selectedPointClub === d.club) {
                 setSelectedPointClub(null);
               } else {
                 setSelectedPointClub(d.club);
               }
             }
-            console.log("current point", selectedPointClub);
+            // console.log("current point", selectedPointClub);
           });
 
         // .each(customCollisionDetection(randomPoints, 5)); // prevents collision?

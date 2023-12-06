@@ -20,11 +20,47 @@ h1 {
     text-align: center;
 }
 
+h1.title {
+    background-color: #0c194b;
+    color: white;
+    /* font-family: "ITC Novarese W04 Bold"; */
+    text-align: center;
+    
+    margin: 0;
+}
+
 svg {
     border-width: 1px;
     border-style: solid;
     border-color: black;
+    margin: 0 ;
 }
+
+/* div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: rgb(243, 239, 22);
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  } */
+
+  .tooltip {
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  /* .tooltip-content { */
+    /* Add additional styling for the content */
+  /* } */
 
 .mainView {
     display: flex;
