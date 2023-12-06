@@ -5,7 +5,7 @@ import { groupByAirline, groupByAirport } from "./utils";
 import "./styles.css";
 import { ClubMap } from "./uefaClubMap";
 import { BarChart } from "./barChart";
-import { AirportBubble } from "./airportBubble";
+import { PlayerBubble } from "./playerBubble";
 import { topWinningClubs, topGoalScorers, coachByTeam } from "./utils";
 
 // The csv file with the club rankings in the competition (uses fifa country codes)
@@ -28,7 +28,7 @@ const logosUrl =
 const allTimeRankingByClub =
   "https://gist.githubusercontent.com/mhendy25/971de005f98140e41d6e1d50ab24eac5/raw/058a9fa78e96fa2e54368a166f9ea804dc8b3dc5/gistfile1.txt";
 const playerGoalTotals =
-  "https://gist.githubusercontent.com/mhendy25/565714447934788439ab434def751180/raw/1d5d9f787e5d1d8e49caa6e6cc6ecf938a1093ed/gistfile1.txt";
+  "https://gist.githubusercontent.com/mhendy25/47cefff9bc9de9fbc71671f96a359705/raw/427769f5d7482273bb90f732f60fb4d1280424ea/gistfile1.txt";
 const coaches =
   "https://gist.githubusercontent.com/mhendy25/10eb594ac5c11792a3bd3f49a452aec9/raw/40d416fd5776c25680528cdcaa77fa5374560e85/gistfile1.txt";
 
@@ -36,6 +36,7 @@ function useBarChartData(csvPath) {
   const [dataAll, setData] = React.useState(null);
   React.useEffect(() => {
     csv(csvPath).then((data) => {
+      // console.log('my data', data)
       data.forEach((d) => {
         d.Titles = +d.Titles;
       });
@@ -69,7 +70,6 @@ function useCoachesData(csvPath) {
       setData(data);
     });
   }, []);
-  console.log("dataAll", dataAll);
   return dataAll;
 }
 // table with the clubs and their ranking in Champions League
@@ -125,34 +125,38 @@ function useClubLogos(csvPath) {
   }, []);
   return dataAll;
 }
-const barChartData = useBarChartData(allTimeRankingByClub);
 
 // the function to display the points on the map
 function UefaClubs() {
   const [selectedPointClub, setSelectedPointClub] = React.useState(null);
   console.log(selectedPointClub);
   const map_height = 700;
-  // const playerGoalsData = usePlayerGoalsData(playerGoalTotals);
-  // const coachesData = useCoachesData(coaches);
+  const barChartData = useBarChartData(allTimeRankingByClub);
+  const playerGoalsData = usePlayerGoalsData(playerGoalTotals);
+  const coachesData = useCoachesData(coaches);
   const rankings = useRankingsData(csvUrl);
   const fifa_codes = useFifaData(codesUrl);
   const clubLogos = useClubLogos(logosUrl);
-
-  console.log("bar chart data", barChartData);
-  console.log("bar chart data", typeof barChartData);
-  console.log("is array index", Array.isArray(barChartData));
-  let winningClubs = topWinningClubs(barChartData);
-  console.log("winning club", winningClubs);
-  // let topPlayers = topGoalScorers(playerGoalsData);
-  // console.log("top players", topPlayers);
-  // let filteredCoaches = coachByTeam(coachesData, "AC Milan");
-  // console.log("filtered coaches", filteredCoaches);
   const map = useMap(mapUrl);
 
-  if (!map || !rankings) {
+  if (!map || !rankings || !barChartData || !playerGoalsData || !coachesData) {
     return <pre>Loading...</pre>;
   }
 
+  let winningClubs = topWinningClubs(barChartData);
+  console.log("winning club", winningClubs);
+  let topPlayers = topGoalScorers(playerGoalsData, selectedPointClub);
+
+  console.log("top players", topPlayers);
+  console.log("selected point before filter", selectedPointClub);
+  let filteredCoaches = coachByTeam(coachesData, selectedPointClub);
+  console.log("filtered coaches", filteredCoaches);
+  let barsData;
+  if (!selectedPointClub) {
+    barsData = winningClubs;
+  } else {
+    barsData = filteredCoaches;
+  }
   // Group clubs by the "Country" attribute
   const groupedArray = rankings.reduce((acc, member) => {
     const { Country, ...rest } = member;
@@ -218,6 +222,18 @@ function UefaClubs() {
   // console.log(newGroupedClubs);
 
   // need to add a header indicating that the map is Europe
+
+  const barchart_width = 350;
+  const barchart_height = 400;
+  const barchart_margin = { top: 10, bottom: 50, left: 130, right: 10 };
+  const barchart_inner_width =
+    barchart_width - barchart_margin.left - barchart_margin.right;
+  const barchart_inner_height =
+    barchart_height - barchart_margin.top - barchart_margin.bottom;
+
+  const hub_width = 400;
+  const hub_height = 370;
+
   return (
     <div>
       <h1>UEFA CHAMPIONS LEAGUE – a visual narrative</h1>
@@ -247,7 +263,16 @@ function UefaClubs() {
               left: window.innerWidth / 2 + 10,
               top: map_height / 2 + 90,
             }}
-          ></svg>
+          >
+            <svg id={"bubble"} width={hub_width} height={hub_height}>
+              <PlayerBubble
+                width={hub_width}
+                height={hub_height}
+                countries={map}
+                players={topPlayers}
+              />
+            </svg>
+          </svg>
         </div>
 
         <div>
@@ -255,10 +280,18 @@ function UefaClubs() {
             id={"view2"}
             height={map_height / 2}
             width={window.innerWidth / 2}
-          ></svg>
+          >
+            <BarChart
+              offsetX={barchart_margin.left}
+              offsetY={barchart_margin.top}
+              height={barchart_inner_height}
+              width={barchart_inner_width}
+              data={barsData}
+              selectedPointClub={selectedPointClub}
+              setSelectedPointClub={setSelectedPointClub}
+            />
+          </svg>
         </div>
-
-        <div></div>
       </div>
     </div>
   );

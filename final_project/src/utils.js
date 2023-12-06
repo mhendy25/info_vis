@@ -92,7 +92,6 @@ function groupByCity(data) {
 }
 
 function topWinningClubs(data) {
-  console.log("is array", Array.isArray(data));
   let result = data.reduce((acc, d) => {
     let currentClub = acc.find((c) => c.Club === d.Club);
 
@@ -121,7 +120,7 @@ function topWinningClubs(data) {
     "https://seeklogo.com/images/A/AC_MILAN-logo-87399104D2-seeklogo.com.png",
     "https://i.imgur.com/HBGtgKF.png",
     "https://i.imgur.com/dw7HNJm.png",
-    "https://i.imgur.com/HiliJUx.png",
+    "https://i.imgur.com/2JgQCRN.png",
     "https://i.imgur.com/mJpWo8O.png",
     "https://i.imgur.com/8GIC8HB.png",
     "https://i.imgur.com/q9yp4KB.png",
@@ -137,7 +136,13 @@ function topWinningClubs(data) {
   return top10Clubs;
 }
 
-function topGoalScorers(data) {
+function topGoalScorers(data, club) {
+  console.log("data inside top goal scorers", data);
+  if (club) {
+    data = data.filter((row) => row.Club === club);
+  }
+  console.log("data inside top goal scorers after filter", data);
+
   let result = data.reduce((acc, d) => {
     let currentPlayer = acc.find((c) => c.Player === d.Player);
 
@@ -154,37 +159,17 @@ function topGoalScorers(data) {
 
     return acc;
   }, []);
+  console.log("club inside topgoalscorers", club);
 
+  console.log("result after top goal scorers", result);
   // Sort the result array by TitlesCount in descending order
   result.sort((a, b) => a.Goals - b.Goals);
-
-  // Return the top 10 clubs with logos
-  // const top10Scorers = result.slice(0, 10);
-
-  // Add the club logos
-  // const logos = [
-  //   'https://i.hizliresim.com/hla0km5.png',
-  //   'https://seeklogo.com/images/A/AC_MILAN-logo-87399104D2-seeklogo.com.png',
-  //   'https://i.imgur.com/HBGtgKF.png',
-  //   'https://i.imgur.com/dw7HNJm.png',
-  //   'https://i.imgur.com/HiliJUx.png',
-  //   'https://i.imgur.com/mJpWo8O.png',
-  //   'https://i.imgur.com/8GIC8HB.png',
-  //   'https://i.imgur.com/q9yp4KB.png',
-  //   'https://i.imgur.com/XiUGXBE.png',
-  //   'https://i.imgur.com/R8kLMcg.png'
-  // ];
-
-  // Add ClubLogoUrl property to each club
-  // top10Clubs.forEach((club, index) => {
-  //   club.ClubLogoUrl = logos[index];
-  // });
 
   return result;
 }
 
 function coachByTeam(data, club) {
-  const coaches = data.filter((row) => row.Club === "AC Milan");
+  const coaches = data.filter((row) => row.Club === club); // need to make sure club names match across the coaches and teams tables
   const result = coaches.map((row) => ({
     Coach: row.Coach,
     Appearance: row.Appearance,

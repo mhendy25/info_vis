@@ -67,7 +67,23 @@ function ClubMap(props) {
   } = props;
   // fix - deselect the club upon second click
   let onClick = (club) => {
-    setSelectedPointClub(club);
+    // if (selectedPointClub === club) {
+    //   setSelectedPointClub(null);
+    // } else {
+    //   setSelectedPointClub(club);
+    // }
+    // console.log("current point", selectedPointClub);
+    console.log("club inside onclick", club);
+    if (selectedPointClub && selectedPointClub !== club) {
+      setSelectedPointClub(club);
+    } else {
+      if (selectedPointClub && selectedPointClub === club) {
+        setSelectedPointClub(null);
+      } else {
+        setSelectedPointClub(club);
+      }
+    }
+    console.log("current point", selectedPointClub);
   };
 
   // console.log(logos);
@@ -196,6 +212,10 @@ function ClubMap(props) {
           .data(randomPoints)
           .enter()
           .append("image")
+          .attr("r", 10)
+          // .attr("fill", "green")
+          // .attr("cx", (d) => d.screenCoordinates[0])
+          // .attr("cy", (d) => d.screenCoordinates[1])
           .attr("class", "point")
           .attr("x", (d) => d.screenCoordinates[0])
           .attr("y", (d) => d.screenCoordinates[1])
@@ -205,9 +225,22 @@ function ClubMap(props) {
           .attr("club", (d) => d.club)
           .attr("xlink:href", (d, i) => (d.logo ? images[i] : null)) // the logo is added here after import
           // .attr("onclick", (d) => console.log(d.club))
-          .on("click", (event, d) => onClick(d.club))
+          .on("click", (event, d) => {
+            console.log("d", d);
+            if (selectedPointClub && selectedPointClub !== d.club) {
+              setSelectedPointClub(d.club);
+            } else {
+              console.log("second else", d.club);
+              if (selectedPointClub && selectedPointClub === d.club) {
+                setSelectedPointClub(null);
+              } else {
+                setSelectedPointClub(d.club);
+              }
+            }
+            console.log("current point", selectedPointClub);
+          });
 
-          .each(customCollisionDetection(randomPoints, 5)); // prevents collision?
+        // .each(customCollisionDetection(randomPoints, 5)); // prevents collision?
       });
     });
 
