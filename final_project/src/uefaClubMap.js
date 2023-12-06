@@ -241,6 +241,9 @@ function ClubMap(props) {
 
     simulation.nodes(randomPoints).on("tick", () => {
       Promise.all(importPromises).then((images) => {
+
+        const tooltipContent = (d) => `Country: ${d.country}, Club: ${d.club}`;
+
         svg
           .selectAll(".point")
           .data(randomPoints)

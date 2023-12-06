@@ -46,12 +46,14 @@ function PlayerBubble(props) {
 
 
   const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, content: '' });
+  // const [tooltip, setTooltip] = useState(null);
+
 
   const handleMouseOver = (event, player) => {
-    // console.log('Mouse over:', player);
+    console.log('Mouse over:', player);
     const { clientX, clientY } = event;
     const content = `Player: ${player.Player}, Goals: ${player.Goals}`;
-    setTooltip({ show: true, x: clientX, y: clientY, content });
+    setTooltip({ show: true, x: (window.innerWidth/2) + player.x, y:  (window.innerHeight/2)+player.y, content });
   };
 
 const handleMouseOut = () => {
@@ -85,11 +87,13 @@ const handleMouseOut = () => {
     .stop();
 
   for (let i = 0; i < 200; ++i) simulation.tick();
-
+      // define the x and y holders here
+      let tmpx, tmpy;
   return (
     <g>
       {players.map((player, idx) => (
-
+      // assign their values herer
+      
       <g key={idx}>
           <circle
             key={idx}
@@ -107,6 +111,9 @@ const handleMouseOut = () => {
       {tooltip.show && (
         <Tooltip x={tooltip.x} y={tooltip.y} content={tooltip.content} />
       )}
+      {/* {players.forEach((player)=>{
+        setTooltip({})
+      })} */}
 
 
       {players.slice(-5).map((player, idx) => (
