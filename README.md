@@ -24,7 +24,7 @@ npx webpack serve
 
 If you got a cool idea, feel free to create a PR!
 
-# Description of the data set and processing:
+# Description of the data set and preprocessing:
 
 We visualize a dataset composed of different tables about UEFA teams, countries, players, goals, and
 coaches from 1992 to 2022 (34 seasons). The dataset contains data about the most performant 277
@@ -33,7 +33,7 @@ we utilize to derive our insights include AllTimeRankingByCountry.csv, CoachesAp
 TopGoalScorer.csv, PlayerGoalDetails.csv from this [publicly available dataset on Kaggle](https://www.kaggle.com/datasets/basharalkuwaiti/champions-league-era-stats?select=TopGoalScorer.csv). The records in the tables have different numbers of attributes including but not limited to (Coach, Club, Season, Appearance, Titles,
 Country, Win, Draw, Loss, Participated). The datatypes used varies depending on the view, but we focus on the number of goals
 (quantitative), coach names (categorical), countries (categorical), club names (categorical) and player
-names (categorical). With regards to data processing, we use JavaScript and D3 on the fly to change the string datatype to integers for numerical attributes. For club logos, we scrap the data online, store it, and map it to its respective club as in `file_name_mapping_script.py`. In addition, we obtain the boarder information of Europe in JSON format, with a large number of coordinates that govern the borders of each country. Although extensive data preprocessing has been done to ensure the map, countries, and clubs are coherent with UEFA official data, one limitation of the map is that the location of clubs within countries doesn't represent the official office location. Rather, club points were randomly sampled from our preprocessed database and kept within the countries boarder through the help of force-directed graphs.
+names (categorical). With regards to data preprocessing, we use JavaScript and D3 on the fly to change the string datatype to integers for numerical attributes. For club logos, we scrap the data online, store it, and map it to its respective club as in `file_name_mapping_script.py`. In addition, we obtain the boarder information of Europe in JSON format, with a large number of coordinates that govern the borders of each country. Although extensive data preprocessing has been done to ensure the map, countries, and clubs are coherent with UEFA official data, one limitation of the map is that the location of clubs within countries doesn't represent the official office location. Rather, club points were randomly sampled from our preprocessed database and kept within the countries boarder through the help of force-directed graphs.
 
 # Goals & Tasks
 
