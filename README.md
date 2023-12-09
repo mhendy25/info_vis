@@ -10,8 +10,8 @@ The two layers of the visualization are displayed below and further exaplained i
 ß
 
 - First General View
-  ![First General View](general-view.png)
-- Second Team-Specific View (Filering by Real Madrid)
+  ![First General View](./final_project/general-view.png)
+- Second Team-Specific View (./final_project/Filering by Real Madrid.png)
   ![Second Team-Specific View](team-specific-view.png)
 
 # Run Locally
@@ -19,9 +19,13 @@ The two layers of the visualization are displayed below and further exaplained i
 To run this project on your local machine, follow these steps:
 
 ```bash
-git clone https://github.com/your-username/your-project.git
-cd your-project
+git clone https://github.com/mhendy25/info_vis.git
+cd info_vis
+npm install
+npx webpack serve
 ```
+
+If you got a cool idea, feel free to create a PR!
 
 # Description of the data set and processing:
 
