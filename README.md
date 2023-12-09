@@ -4,15 +4,12 @@ Visualizations serve as powerful tools for conveying intricate data in a clear a
 
 - Addressing the burgeoning demand for accessible information and comparative analysis, a proposed multilayer visualization of UEFA Champions League data aims to facilitate easy comparison of teams and players. This approach simplifies the comprehension of trends, patterns, and key insights, ensuring understanding of the competition's and each team's history.
 
-- By visually depicting UEFA Champions League data, one can explore historical trends and milestones, telling stories about a team's performance tracing the evolution of a player's career in the tournament. This storytelling element enhances audience engagement, captivating fans by providing a visually enriched journey through the tournament's rich history.
-
-The two layers of the visualization are displayed below and further exaplained in the ![Visualization] section below.
-ß
+- By visually depicting UEFA Champions League data, one can explore historical trends and milestones, telling stories about a team's performance tracing the evolution of a player's career in the tournament. This storytelling element enhances audience engagement, captivating fans by providing a visually enriched journey through the tournament's rich history. The two layers of the [visualizations](#visualization) are displayedß and further exaplained in the section below.
 
 - First General View
   ![First General View](./final_project/general-view.png)
-- Second Team-Specific View (./final_project/Filering by Real Madrid.png)
-  ![Second Team-Specific View](team-specific-view.png)
+- Second Team-Specific View (Filtered by Clicking on Real Madrid's Logo)
+  ![Second Team-Specific View](./final_project/team-specific-view.png)
 
 # Run Locally
 
